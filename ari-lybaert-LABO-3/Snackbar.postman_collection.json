@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "54255b4a-0a72-48cf-8f47-c977d378b8c7",
+		"name": "Snackbar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"arne\",\n    \"password\": \"secret\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/jwt-auth/v1/token",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"jwt-auth",
+						"v1",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"arne\", \n    \"email\": \"arne@verly.com\", \n    \"password\": \"secret\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/users/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create purchase",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zbmFja2Jhci50ZXN0IiwiaWF0IjoxNjAyOTI1MzM1LCJuYmYiOjE2MDI5MjUzMzUsImV4cCI6MTYwMzUzMDEzNSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.7viDzHfI-FSG2JQ8_zdTZwk0zjaP-1BXVTGmRh60fM8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Bestelling 9000\",\n    \"content\": \"\",\n    \"fields\": {\n        \"adress\": \"Vleugstraat 12\",\n        \"delivery_time\": \"13:30\",\n        \"content\": [15]\n        },\n        \"status\": \"publish\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/purchase",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show purchases",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zbmFja2Jhci50ZXN0IiwiaWF0IjoxNjAyNjY0NjIzLCJuYmYiOjE2MDI2NjQ2MjMsImV4cCI6MTYwMzI2OTQyMywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.jaI3lz1LGyWaIc7l6BK94_i2Lo_tosYvzacRVhYDenk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Bestelling 9000\",\n    \"content\": \"\",\n    \"fields\": {\n        \"adress\": \"Vleugstraat 12\",\n        \"delivery_time\": \"13:30\",\n        \"content\": [16]\n        },\n        \"status\": \"publish\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/purchase",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show burgers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zbmFja2Jhci50ZXN0IiwiaWF0IjoxNjAyNjY0NjIzLCJuYmYiOjE2MDI2NjQ2MjMsImV4cCI6MTYwMzI2OTQyMywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.jaI3lz1LGyWaIc7l6BK94_i2Lo_tosYvzacRVhYDenk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Bestelling 9000\",\n    \"content\": \"\",\n    \"fields\": {\n        \"adress\": \"Vleugstraat 12\",\n        \"delivery_time\": \"13:30\",\n        \"content\": [16]\n        },\n        \"status\": \"publish\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/burger",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"burger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show specific burger",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/burger/15",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"burger",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show specific puchase",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/purchase/18",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"purchase",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show specific user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zbmFja2Jhci50ZXN0IiwiaWF0IjoxNjAyNjY0NjIzLCJuYmYiOjE2MDI2NjQ2MjMsImV4cCI6MTYwMzI2OTQyMywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.jaI3lz1LGyWaIc7l6BK94_i2Lo_tosYvzacRVhYDenk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Bestelling 9000\",\n    \"content\": \"\",\n    \"fields\": {\n        \"adress\": \"Vleugstraat 12\",\n        \"delivery_time\": \"13:30\",\n        \"content\": [16]\n        },\n        \"status\": \"publish\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/users/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show user order",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zbmFja2Jhci50ZXN0IiwiaWF0IjoxNjAyNjY0NjIzLCJuYmYiOjE2MDI2NjQ2MjMsImV4cCI6MTYwMzI2OTQyMywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMiJ9fX0.jaI3lz1LGyWaIc7l6BK94_i2Lo_tosYvzacRVhYDenk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Bestelling 9000\",\n    \"content\": \"\",\n    \"fields\": {\n        \"adress\": \"Vleugstraat 12\",\n        \"delivery_time\": \"13:30\",\n        \"content\": [16]\n        },\n        \"status\": \"publish\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wp-json/wp/v2/users/2?order=19",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"users",
+						"2"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
