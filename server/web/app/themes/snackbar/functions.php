@@ -25,3 +25,11 @@ function snackbar_custom_logo_setup() {
 
    add_action( 'init', 'register_my_menus' );
    add_action( 'after_setup_theme', 'snackbar_custom_logo_setup' );
+
+
+function snackbar_add_theme_scriptsstyles() {
+
+  wp_enqueue_style( 'main', get_template_directory_uri() . '/assets/css/main.css',[ '' ],'1.0','all');
+
+}
+add_action('wp_enqueue_scripts', 'snackbar_add_theme_scriptsstyles');
