@@ -9,7 +9,7 @@ const Main = () => {
     const [burgers, setBurgers] = useState(0);
     const [burgersObject, setBurgersObject] = useState();
     const [burgerprice, setBurgerprice] = useState();
-    const [totalprice, setTotalprice] = useState(0);
+    const [totalprice, setTotalprice] = useState('0');
     const [shoppingcart, setShoppingcart] = useState([]);
 
 
@@ -21,20 +21,33 @@ const Main = () => {
     let cart;
 
     const changeprice = () => {
-        // let price;
-        // const object = Object.values(shoppingcart);
-        // const result = object.map((data) => {
-        //     price += data.amount * data.price;
-        //     return price;
-        // })
-        console.log('hey')
+        let price = 0;
+        const object = Object.values(shoppingcart);
+        object.map((data) => {
+            const itemprice = parseFloat(data.amount) * parseFloat(data.price);
+            price += itemprice
+            return price;
+        })
+        console.log("run")
         console.log(shoppingcart);
 
-        // setTotalprice(result);
+        setTotalprice(price);
     }
 
-
+    // @TODO find fix for useeffect
     useEffect(changeprice, [shoppingcart]);
+
+    useEffect(() => {
+        axios.get( 
+            url,
+          //   bodyParameters,
+            config
+          ).then((res) => {
+              setBurgersObject(res.data);
+            //   console.log(res.data[0]);
+
+          }).catch(console.log);
+    },[]);
 
     // add cart items
     const addToCart = (burger) => {
@@ -55,18 +68,23 @@ const Main = () => {
         }
         setShoppingcart(cart);
         console.log(shoppingcart);
+
+        //@todo temp fix
+        changeprice();
     }
 
     // add or remove burgers from CARTMENU
-    const addBurger = (bool) => {
-        let burgerAmnt = burgers;
-        let totalpriceAmnt = totalprice;
-        bool? burgerAmnt++ : burgerAmnt--;
-        burgerAmnt < 0? burgerAmnt = 0 :
+    const addBurger = (bool, id) => {
+        console.log(id);
+        cart = shoppingcart;
+        const index = cart.findIndex(x => x.id === id);
+        console.log(index);
+        bool ? cart[index].amount +=1 : cart[index].amount -=1;;
+        cart[index].amount < 0? cart[index].amount = 0 :
+        
+        // @todo temp fix
+        changeprice();
 
-        totalpriceAmnt = burgerprice * burgerAmnt;
-        setTotalprice(totalpriceAmnt);
-        setBurgers(burgerAmnt);
     }
 
     // Request configuration
@@ -80,17 +98,7 @@ const Main = () => {
     
 
 
-    useEffect(() => {
-        axios.get( 
-            url,
-          //   bodyParameters,
-            config
-          ).then((res) => {
-              setBurgersObject(res.data);
-            //   console.log(res.data[0]);
 
-          }).catch(console.log);
-    },[]);
     return (
         <div className="row o-main-content">
             <div className="col-12 o-main">
@@ -100,20 +108,24 @@ const Main = () => {
                             <div classname="row ">
                                 <h3 className="o-cart-title">Burgers</h3>
                             </div>
-                            <div className="row">
-                                <div className="col-4">Double XL</div>
-                                <div className="col-4">
-                                    <div>
-                                        <button onClick={() => addBurger(false)}>-</button>
-                                        <span>{burgers}</span>
-                                        <button onClick={() => addBurger(true)}>+</button>
-                                    </div>
-                                </div>
-                                <div className="col-2">$4.5</div>
-                                <div className="col-2">
-                                    <button>Remove</button>
-                                </div>
-                            </div>
+                            {shoppingcart && shoppingcart.map((cartItem) => {
+                                return <div className="row">
+                                            <div className="col-4">{cartItem.id}</div>
+                                            <div className="col-4">
+                                                <div>
+                                                    <button onClick={() => addBurger(false, cartItem.id)}>-</button>
+                                                    <span>{cartItem.amount}</span>
+                                                    <button onClick={() => addBurger(true, cartItem.id)}>+</button>
+                                                </div>
+                                            </div>
+                                            <div className="col-2">${cartItem.price}</div>
+                                            <div className="col-2">
+                                                <button>Remove</button>
+                                            </div>
+                                        </div>
+                            })
+                        }
+                            
                         </div>
                         }
                     <div className="row">
