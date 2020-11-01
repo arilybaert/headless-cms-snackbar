@@ -2,7 +2,10 @@
 add_theme_support('post-thumbnails');
 add_theme_support( 'custom-logo' );
 add_theme_support( 'post-thumbnails' );
-
+function add_cors_http_header(){
+    header("Access-Control-Allow-Origin: *");
+}
+add_action('init','add_cors_http_header');
 function snackbar_custom_logo_setup() {
     $defaults = array(
     'height'      => 100,
