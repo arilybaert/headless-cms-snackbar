@@ -6,9 +6,9 @@ const Main = () => {
 
     const [open, setOpen] = useState();
 
-    const [burgers, setBurgers] = useState(0);
+
     const [burgersObject, setBurgersObject] = useState();
-    const [burgerprice, setBurgerprice] = useState();
+
     const [totalprice, setTotalprice] = useState('0');
     const [shoppingcart, setShoppingcart] = useState([]);
 
@@ -28,7 +28,6 @@ const Main = () => {
             price += itemprice
             return price;
         })
-        console.log("run")
         console.log(shoppingcart);
 
         setTotalprice(price);
@@ -44,7 +43,6 @@ const Main = () => {
             config
           ).then((res) => {
               setBurgersObject(res.data);
-            //   console.log(res.data[0]);
 
           }).catch(console.log);
     },[]);
@@ -54,21 +52,20 @@ const Main = () => {
 
         cart = shoppingcart;
         const index = cart.findIndex(x => x.id ===burger.id);
-
         // create OR add new cart item
         if(index >= 0) {
             cart[index].amount +=1;
         } else {
             const burgerObj = {
                 id: burger.id,
+                name: burger.title.rendered,
                 amount: 1,
                 price: burger.acf.price
             }
             cart.push(burgerObj);
         }
         setShoppingcart(cart);
-        console.log(shoppingcart);
-
+        console.log(cart);
         //@todo temp fix
         changeprice();
     }
@@ -89,7 +86,15 @@ const Main = () => {
 
     // Request configuration
     const config = {
-        headers: { Authorization: `Bearer ${token}` }
+        mode: 'no-cors',
+        method: 'GET',
+        headers: { 
+            Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',            
+            'Content-Type': 'application/json',
+     },
+     withCredentials: true,
+     credentials: 'same-origin',
     };
     
     // const bodyParameters = {
@@ -105,12 +110,12 @@ const Main = () => {
                 <div className="m-main">
                 { open && 
                         <div className="o-layover">
-                            <div classname="row ">
+                            <div className="row ">
                                 <h3 className="o-cart-title">Burgers</h3>
                             </div>
-                            {shoppingcart && shoppingcart.map((cartItem) => {
-                                return <div className="row">
-                                            <div className="col-4">{cartItem.id}</div>
+                            {shoppingcart && shoppingcart.map((cartItem, index) => {
+                                return <div className="row" key={index}>
+                                            <div className="col-4">{cartItem.name}</div>
                                             <div className="col-4">
                                                 <div>
                                                     <button onClick={() => addBurger(false, cartItem.id)}>-</button>
