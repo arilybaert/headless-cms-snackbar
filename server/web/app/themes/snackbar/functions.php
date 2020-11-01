@@ -1,28 +1,31 @@
-<?php
+ <?php
+function my_customize_rest_cors() {
+	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+	add_filter( 'rest_pre_serve_request', function( $value ) {
+		header( 'Access-Control-Allow-Origin: *' );
+		header( 'Access-Control-Allow-Methods: GET' );
+		header( 'Access-Control-Allow-Credentials: true' );
+		header( 'Access-Control-Expose-Headers: Link', false );
+		header( 'Access-Control-Allow-Headers: X-Requested-With' );
+
+
+		return $value;
+	} );
+}
+
+add_action( 'rest_api_init', 'my_customize_rest_cors', 15 );
+
+
+
+
+
+
+
+
 add_theme_support('post-thumbnails');
 add_theme_support( 'custom-logo' );
 add_theme_support( 'post-thumbnails' );
-function initCors( $value ) {
-  $origin_url = '*';
 
-  // Check if production environment or not
-  // if (ENVIRONMENT === 'production') {
-  //   $origin_url = 'http://arilybaert.com';
-  // }
-
-  header( 'Access-Control-Allow-Origin: ' . $origin_url );
-  header( 'Access-Control-Allow-Methods: GET' );
-  header( 'Access-Control-Allow-Credentials: true' );
-  return $value;
-}
-// ... initCors function
-
-add_action( 'rest_api_init', function() {
-
-	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
-
-	add_filter( 'rest_pre_serve_request', initCors);
-}, 15 );
 function snackbar_custom_logo_setup() {
     $defaults = array(
     'height'      => 100,
