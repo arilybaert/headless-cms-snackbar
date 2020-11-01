@@ -1,7 +1,11 @@
 import Main from './Main';
 import Form from './Form';
+import Login from './Login';
+import Confirmation from './Confirmation';
 
 export {
     Main,
-    Form
+    Form,
+    Login,
+    Confirmation
 }

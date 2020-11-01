@@ -1,8 +1,10 @@
 import {Header} from './header'
-import {Main, Form} from './main'
+import {Main, Form, Login, Confirmation} from './main'
 
 export {
     Header,
     Main,
-    Form
+    Form,
+    Login,
+    Confirmation
 }

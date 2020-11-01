@@ -15,7 +15,7 @@ const Main = () => {
 
     // constants
     const url = "http://www.arilybaert.com/wp-json/wp/v2/burger";
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xODguMTY2Ljg4LjE2MyIsImlhdCI6MTYwMzkwMTY0MywibmJmIjoxNjAzOTAxNjQzLCJleHAiOjE2MDQ1MDY0NDMsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.MNz5bmZgxkF0SuKhOEZne4utIzcAdcORw8MH53Y1iTQ";
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xODguMTY2Ljg4LjE2MyIsImlhdCI6MTYwNDIyODUwMSwibmJmIjoxNjA0MjI4NTAxLCJleHAiOjE2MDQ4MzMzMDEsImRhdGEiOnsidXNlciI6eyJpZCI6IjIifX19.5M8C9kdW1squtLJFCXnL81NsxCVEzMRTbufXL45sS5g";
 
 
     let cart;
@@ -31,6 +31,7 @@ const Main = () => {
         console.log(shoppingcart);
 
         setTotalprice(price);
+
     }
 
     // @TODO find fix for useeffect
@@ -65,7 +66,8 @@ const Main = () => {
             cart.push(burgerObj);
         }
         setShoppingcart(cart);
-        console.log(cart);
+        localStorage.setItem('cart', JSON.stringify(cart));
+
         //@todo temp fix
         changeprice();
     }
@@ -90,11 +92,9 @@ const Main = () => {
         method: 'GET',
         headers: { 
             Authorization: `Bearer ${token}`,
-            'Access-Control-Allow-Origin': '*',            
-            'Content-Type': 'application/json',
+
      },
-     withCredentials: true,
-     credentials: 'same-origin',
+
     };
     
     // const bodyParameters = {
@@ -164,7 +164,7 @@ const Main = () => {
                     </div>
                     <div className="o-cart">
                         <button onClick={() => setOpen(!open)}>${totalprice}</button>
-                        <Link to="/form" href="form" >next</Link>
+                        <Link to="/login" >next</Link>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { 
   Header,
   Main,
-  Form
+  Form,
+  Login,
+  Confirmation
  } from './components';
 
 
@@ -27,9 +29,18 @@ function App() {
               <Main/>
             </Route>
 
+            <Route path="/login" exact>
+              <Login/>
+            </Route>
+
             <Route path="/form" exact>
               <Form/>
             </Route>
+
+            <Route path="/Confirmation" exact>
+              <Confirmation/>
+            </Route>
+            
             </div>
         </Switch>
       </Router>
