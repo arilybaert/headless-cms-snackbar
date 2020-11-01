@@ -5,6 +5,10 @@
 
 .a-site-title {
     color: var(--secondary-color);
+    font-family: 'Alex Brush';
+    font-size: 37pt;
+    color: var(--white);
+    text-align: center;
 }
 
 .m-menu-links {

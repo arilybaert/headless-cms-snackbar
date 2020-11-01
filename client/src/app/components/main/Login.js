@@ -1,6 +1,6 @@
 import React, {  useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Route, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Login = () => {
     const [openForm, setOpenForm] = useState(true);
@@ -16,7 +16,6 @@ const Login = () => {
         mode: 'no-cors',
         method: 'POST',
         headers: { 
-
         },
     };
     
@@ -40,7 +39,6 @@ const Login = () => {
           ).then((res) => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username', res.data.user_display_name);
-            console.log('roure');
             history.push("/confirmation");
 
           }).catch((err) => {

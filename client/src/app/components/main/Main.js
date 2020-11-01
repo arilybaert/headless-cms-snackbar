@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Main = () => {
+    const history = useHistory();
 
     const [open, setOpen] = useState();
 
@@ -92,17 +93,16 @@ const Main = () => {
         method: 'GET',
         headers: { 
             Authorization: `Bearer ${token}`,
-
      },
-
     };
     
-    // const bodyParameters = {
-    //    key: "value"
-    // };
+
     
 
+ const handeleClick = () => {
+    history.push("/login");
 
+ }
 
     return (
         <div className="row o-main-content">
@@ -124,9 +124,7 @@ const Main = () => {
                                                 </div>
                                             </div>
                                             <div className="col-2">${cartItem.price}</div>
-                                            <div className="col-2">
-                                                <button>Remove</button>
-                                            </div>
+
                                         </div>
                             })
                         }
@@ -136,10 +134,10 @@ const Main = () => {
                     <div className="row">
                         <div className="col-12">
                             <ul className="m-menu-items">
-                                <li>Burger</li>
-                                <li>Snacks</li>
+                                <li>Burgers</li>
+                                {/* <li>Snacks</li>
                                 <li>Fries</li>
-                                <li>Drinks</li>
+                                <li>Drinks</li> */}
                             </ul>
                         </div>
                     </div>
@@ -149,7 +147,7 @@ const Main = () => {
                         {
                             burgersObject && burgersObject.map((burger, index) => {
                                 // console.log(burger);
-                                return <div className="col-4 o-menuItem-card" key={index}>
+                                return <div className="col-12 col-sm-6 col-md-4 o-menuItem-card" key={index}>
                                             <div className="m-menuItem-card">
                                                 <img src={burger.acf.image.url} alt="burger" title="menu item" className="a-menuItem-picture"/>
                                                 <div className="m-menuItem-price">
@@ -163,8 +161,10 @@ const Main = () => {
 
                     </div>
                     <div className="o-cart">
-                        <button onClick={() => setOpen(!open)}>${totalprice}</button>
-                        <Link to="/login" >next</Link>
+                        <div className="m-cart">
+                        <button className="a-main-priceBtn" onClick={() => setOpen(!open)}>${totalprice}</button>
+                        <button className="a-main-nextBtn" onClick={() => handeleClick()} >next</button>
+                        </div>
                     </div>
                 </div>
             </div>

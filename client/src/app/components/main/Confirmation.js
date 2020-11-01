@@ -7,11 +7,9 @@ import {Link} from "react-router-dom";
 const Confirmation = () => {
     const [openForm, setOpenForm] = useState(true);
     const [timeOptions, setTimeOptions] = useState();
-    const [form, setForm] = useState({
-        time: "",
-    });
+
     const url = "http://www.arilybaert.com/wp-json/wp/v2/purchase";
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xODguMTY2Ljg4LjE2MyIsImlhdCI6MTYwNDIzNDE2MywibmJmIjoxNjA0MjM0MTYzLCJleHAiOjE2MDQ4Mzg5NjMsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.bNjZQ6L8Iu1x_HjolUuREEGzIbFcrthVjWQW3b_2_ic";
+    const token = localStorage.getItem('token');
     const ordeId = nextId();
 
     // Request configuration
@@ -23,12 +21,10 @@ const Confirmation = () => {
 
         },
     };
-    useEffect(() => {
-        console.log(form);
-    },[form]);
 
+
+    let timeframes = [];
     useEffect(() => {
-        let timeframes = [];
 
         var newTime = new Date();
         let time = newTime.getHours();
@@ -44,6 +40,25 @@ const Confirmation = () => {
         }
         setTimeOptions(timeframes);
     },[]);
+    const [form, setForm] = useState({
+        time: timeframes[0],
+    });
+    useEffect(() => {
+        console.log(form);
+    },[form]);
+    const createPurchase = (bodyParameters) => {
+        axios.post( url, bodyParameters, config)
+            .then((res) => {
+              console.log(res);
+            if(res.statusText==="Created") {
+                setOpenForm(!openForm);
+            }
+
+          }).catch((err) => {
+              console.log(err);
+              console.log('email or pass incorrect');
+            });
+    }
 
     const handlePurchase = () => {
         // get content from local storage and mold it into an array for request
@@ -65,17 +80,9 @@ const Confirmation = () => {
                 "status": "publish"
         };
 
-        axios.post( url, bodyParameters, config)
-            .then((res) => {
-              console.log(res);
-            if(res.statusText==="Created") {
-                setOpenForm(!openForm);
-            }
+        createPurchase(bodyParameters);
 
-          }).catch((err) => {
-              console.log(err);
-              console.log('email or pass incorrect');
-            });
+        
     }
     const handleSubmit = (event) => {
         event.preventDefault();

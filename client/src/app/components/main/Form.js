@@ -1,21 +1,80 @@
 import React, {  useState } from 'react';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+
 
 const Form = () => {
     const [openForm, setOpenForm] = useState(true);
-    const [openConfirmation, setopenConfirmation] = useState(false)
+    const history = useHistory();
 
+    // Request configuration
+    const url = "http://www.arilybaert.com/wp-json/wp/v2/users/register";
+    const url_2 = "http://www.arilybaert.com/wp-json/jwt-auth/v1/token";
+    const config = {
+        mode: 'no-cors',
+        method: 'POST',
+        headers: { 
+        },
+    };
 
     const [form, setForm] = useState({
-        firstname: "",
-        lastname: "",
+        username: "",
+        email: "",
+        password: "",
         address: "",
         address_2: "",
         city: "",
         zip: ""
     });
 
-    const handleSubmit = (event) => {
+    const createAccount = async () => {
+        const bodyParameters = {
+            "username": form.username,
+            "email": form.email, 
+            "password": form.password
+        };
+
+        await axios.post( 
+            url,
+            bodyParameters,
+            config
+          ).then((res) => {
+            localStorage.setItem('username', res.data.user_display_name);
+
+          }).catch((err) => {
+              console.log(err.message);
+              console.log('cant create account');
+            });
+
+
+        const bodyParameters_2 = {
+            "username": form.username,
+            "password": form.password
+        };
+        // CREATE TOKEN
+        await axios.post( 
+            url_2,
+            bodyParameters_2,
+            config
+          ).then((res) => {
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('username', res.data.user_display_name);
+            // history.push("/confirmation");
+
+          }).catch((err) => {
+              console.log(err.message);
+            });
+
+        
+    }
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(form);
+        await createAccount();
+        history.push("/confirmation");
+
+
     }
     const handleChange = (event) => {
         const value = event.target.value;
@@ -33,13 +92,20 @@ const Form = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-row">
                         <div className="form-group col-md-6">
-                            <label htmlFor="Name">Voornaam</label>
-                            <input type="text" className="form-control" id="Name" name="firstname" placeholder="Chuck" value={form.firstname} onChange={handleChange}></input>
+                            <label htmlFor="Name">Username</label>
+                            <input type="text" className="form-control" id="Username" name="username" placeholder="Chuck" value={form.username} onChange={handleChange}></input>
                         </div>
                         <div className="form-group col-md-6">
-                            <label htmlFor="Lastname">Achternaam</label>
-                            <input type="text" className="form-control" id="Lastname" name="lastname" placeholder="Berry" value={form.lastname} onChange={handleChange}></input>
+                            <label htmlFor="Email">Email</label>
+                            <input type="email" className="form-control" id="Email" name="email" placeholder="Berry" value={form.email} onChange={handleChange}></input>
                         </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <label htmlFor="Password">Password</label>
+                            <input type="password" className="form-control" id="Password" name="password" placeholder="secret" value={form.password} onChange={handleChange}></input>
+                        </div>
+
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
@@ -62,14 +128,10 @@ const Form = () => {
                         </div>
                     </div>
 
-                    <button type="submit" className="btn btn-primary a-orderBtn" onClick={() => setOpenForm(!openForm)}>Bestel</button>
+                    <button type="submit" className="btn btn-primary a-orderBtn" onClick={() => setOpenForm(openForm)}>Bestel</button>
                     </form>
                 }
 
-                {
-                    !openForm && 
-                    <p className="a-order-confirmation">Thanks for ordering! <br/>This is your order ID: snackbar123</p>
-                }
                 </div>
             </div>
         </div>
